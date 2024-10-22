@@ -1,4 +1,10 @@
 {
     "name":"First_app",
     'author':'Dharmik',
+    'license':'LGPL-3',
+    'data':[
+        'security/ir.model.access.csv',
+        'views/user.xml',
+        'views/menu.xml',
+    ]
 }
