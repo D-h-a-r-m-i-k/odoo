@@ -9,5 +9,4 @@
               name="First_menu"
               parent="First_parent"
               action='action_first_user'/>
-
 </odoo>
