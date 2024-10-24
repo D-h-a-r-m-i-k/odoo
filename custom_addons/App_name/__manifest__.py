@@ -2,8 +2,14 @@
     "name":"First_app",
     'author':'Dharmik',
     'license':'LGPL-3',
+    'depends':[
+      'mail'
+    ],
     'data':[
         'security/ir.model.access.csv',
+        'data/sequence.xml',
+        'views/sec_view.xml',
+        'views/record_user.xml',
         'views/user.xml',
         'views/menu.xml',
     ]
