@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="First_root"
+              name="First"/>
+    <menuitem id="First_parent"
+              name="First_parent"
+              parent="First_root"/>
+
+    <menuitem id="sec_parent"
+              name="Sec_parent"
+              parent="First_root"
+              action="action_appointment"/>
+
+    <menuitem id="First_menu"
+              name="First_menu"
+              parent="First_parent"
+              action='action_first_user'/>
+    <menuitem id="Record_menu"
+              name="Record_menu"
+              parent="First_parent"
+              action='action_record_user'/>
+</odoo>
