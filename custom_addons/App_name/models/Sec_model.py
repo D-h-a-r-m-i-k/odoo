@@ -18,6 +18,7 @@ class First(models.Model):
         ('male', 'Male'),
         ('female', 'Female')
     ], string='Gender', required=True)
+    status = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('ongoing', 'Ongoing'), ('done', 'Done'), ('cancel', 'Cancel')],default='draft',tracking=True)
     note=fields.Char(string='NOTE',tracking=True)
 
     @api.model_create_multi
@@ -27,3 +28,19 @@ class First(models.Model):
             if not vals.get('reference') or vals['reference']=='New':
                 vals['reference']=self.env['ir.sequence'].next_by_code('sec.module')
         return super().create(vals_list)
+
+    def action_confirmed(self):
+        for i in self:
+            self.status='confirmed'
+
+    def action_ongoing(self):
+        for i in self:
+            self.status='ongoing'
+
+    def action_done(self):
+        for i in self:
+            self.status='done'
+
+    def action_cancel(self):
+        for i in self:
+            self.status = 'cancel'
