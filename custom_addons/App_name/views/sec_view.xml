@@ -18,6 +18,13 @@
         <field name="model">sec.module</field>
         <field name="arch" type="xml">
             <form string="Patients">
+                <header>
+                    <button name="action_confirmed" type="object" string="confirmed" invisible="status != 'draft'"/>
+                    <button name="action_ongoing" type="object" string="Ongoing" invisible="status != 'confirmed'"/>
+                    <button name="action_done" type="object" string="Done" invisible="status != 'ongoing'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="status == 'done' or status =='cancel'"/>
+                    <field name="status"  widget="statusbar" statusbar_visible="draft,confirmed,ongoing,done"/>
+                </header>
                 <sheet>
                     <h1><field name="reference" readonly='True'/></h1>
                     <group>

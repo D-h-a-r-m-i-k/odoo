@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <menuitem id="First_root"
-              name="First"/>
+              name="First"
+              web_icon="App_name,static/description/icon.png"/>
     <menuitem id="First_parent"
               name="First_parent"
               parent="First_root"/>
