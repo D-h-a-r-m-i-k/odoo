@@ -6,7 +6,7 @@ from odoo import fields, models,api
 from odoo.http import request
 
 
-class First(models.Model):
+class Sec(models.Model):
     _name = 'sec.module'
     _description='Second Module'
     _inherit = ['mail.thread']
@@ -20,6 +20,7 @@ class First(models.Model):
     ], string='Gender', required=True)
     status = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('ongoing', 'Ongoing'), ('done', 'Done'), ('cancel', 'Cancel')],default='draft',tracking=True)
     note=fields.Char(string='NOTE',tracking=True)
+    appointment_line_ides=fields.One2many('first.line','appointment_id',string='lines')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -44,3 +45,11 @@ class First(models.Model):
     def action_cancel(self):
         for i in self:
             self.status = 'cancel'
+
+class FirstLine(models.Model):
+    _name='first.line'
+    _description='user line'
+
+    appointment_id = fields.Many2one('sec.module', string='Appointment')
+    product_id=fields.Many2one('product.product',string='product')
+    quantity=fields.Float(string='Quantity')

@@ -37,6 +37,12 @@
                             <field name="note"/>
                         </group>
                     </group>
+                    <field name="appointment_line_ides">
+                        <list>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                        </list>
+                    </field>
                 </sheet>
                 <chatter/>
             </form>

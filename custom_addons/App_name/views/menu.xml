@@ -6,11 +6,10 @@
     <menuitem id="First_parent"
               name="First_parent"
               parent="First_root"/>
-
     <menuitem id="sec_parent"
               name="Sec_parent"
               parent="First_root"
-              action="action_appointment"/>
+              />
 
     <menuitem id="First_menu"
               name="First_menu"
@@ -20,4 +19,17 @@
               name="Record_menu"
               parent="First_parent"
               action='action_record_user'/>
+
+    <menuitem id="sec_menu"
+              name="Appointment"
+              parent="sec_parent"
+              action="action_appointment"/>
+    <menuitem id="sec_menu_line"
+              name="Appointment_line"
+              parent="sec_parent"
+              action="action_user_line"/>
+    <menuitem id="tag_menu"
+              name="Tags"
+              parent="sec_parent"
+              action="action_user_tag"/>
 </odoo>
