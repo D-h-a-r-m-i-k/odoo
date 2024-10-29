@@ -4,7 +4,7 @@
         <field name="name">view.appoint.list</field>
         <field name="model">sec.module</field>
         <field name="arch" type="xml">
-            <list string="Patients" >
+            <list string="Patients">
                 <field name="reference"/>
                 <field name="user_name"/>
                 <field name="gender"/>
@@ -22,11 +22,14 @@
                     <button name="action_confirmed" type="object" string="confirmed" invisible="status != 'draft'"/>
                     <button name="action_ongoing" type="object" string="Ongoing" invisible="status != 'confirmed'"/>
                     <button name="action_done" type="object" string="Done" invisible="status != 'ongoing'"/>
-                    <button name="action_cancel" type="object" string="Cancel" invisible="status == 'done' or status =='cancel'"/>
-                    <field name="status"  widget="statusbar" statusbar_visible="draft,confirmed,ongoing,done"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="status == 'done' or status =='cancel'"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,ongoing,done"/>
                 </header>
                 <sheet>
-                    <h1><field name="reference" readonly='True'/></h1>
+                    <h1>
+                        <field name="reference" readonly='True'/>
+                    </h1>
                     <group>
                         <group>
                             <field name="user_name"/>
@@ -34,15 +37,23 @@
                         </group>
                         <group>
                             <field name="date_of_birth"/>
-                            <field name="note"/>
                         </group>
                     </group>
-                    <field name="appointment_line_ides">
-                        <list>
-                            <field name="product_id"/>
-                            <field name="quantity"/>
-                        </list>
-                    </field>
+                    <notebook>
+                        <page name="appointment_line" string="data">
+                            <field name="appointment_line_ides">
+                                <list editable="top">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="note" string="Feedback">
+                            <group>
+                                <field name="note"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <chatter/>
             </form>

@@ -10,6 +10,7 @@ class Sec(models.Model):
     _name = 'sec.module'
     _description='Second Module'
     _inherit = ['mail.thread']
+    _rec_names_search = ['reference','user_name']
     _rec_name = 'user_name'
     reference=fields.Char(string='',default='New')
     user_name=fields.Many2one('first.module',string='Name',required=True,tracking=True)
@@ -24,7 +25,6 @@ class Sec(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        print('Dharmik',vals_list)
         for vals in vals_list:
             if not vals.get('reference') or vals['reference']=='New':
                 vals['reference']=self.env['ir.sequence'].next_by_code('sec.module')

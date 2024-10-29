@@ -30,6 +30,7 @@
               action="action_user_line"/>
     <menuitem id="tag_menu"
               name="Tags"
+              sequence="20"
               parent="sec_parent"
               action="action_user_tag"/>
 </odoo>
