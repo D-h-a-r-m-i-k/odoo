@@ -38,6 +38,9 @@
                         <group>
                             <field name="date_of_birth"/>
                         </group>
+                        <group>
+                            <field name="total_qty"/>
+                        </group>
                     </group>
                     <notebook>
                         <page name="appointment_line" string="data">

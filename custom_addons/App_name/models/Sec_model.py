@@ -3,6 +3,7 @@ from email.policy import default
 from docutils.nodes import reference
 
 from odoo import fields, models,api
+from odoo.api import ondelete
 from odoo.http import request
 
 
@@ -13,15 +14,13 @@ class Sec(models.Model):
     _rec_names_search = ['reference','user_name']
     _rec_name = 'user_name'
     reference=fields.Char(string='',default='New')
-    user_name=fields.Many2one('first.module',string='Name',required=True,tracking=True)
+    user_name=fields.Many2one('first.module',string='Name',ondelete='restrict',required=True,tracking=True)
     date_of_birth=fields.Date(string='Appointment Date',required=True,tracking=True)
-    gender = fields.Selection([
-        ('male', 'Male'),
-        ('female', 'Female')
-    ], string='Gender', required=True)
+    gender = fields.Selection( string='Gender',related='user_name.gender')
     status = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('ongoing', 'Ongoing'), ('done', 'Done'), ('cancel', 'Cancel')],default='draft',tracking=True)
     note=fields.Char(string='NOTE',tracking=True)
     appointment_line_ides=fields.One2many('first.line','appointment_id',string='lines')
+    total_qty=fields.Float(compute='_compute_total_qty',string='Total Quantity',store=True)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -29,6 +28,15 @@ class Sec(models.Model):
             if not vals.get('reference') or vals['reference']=='New':
                 vals['reference']=self.env['ir.sequence'].next_by_code('sec.module')
         return super().create(vals_list)
+
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name=f"[{rec.reference}] {rec.user_name.name}"
+
+    @api.depends('appointment_line_ides','appointment_line_ides.quantity')
+    def _compute_total_qty(self):
+        for rec in self:
+            rec.total_qty=sum(rec.appointment_line_ides.mapped('quantity'))
 
     def action_confirmed(self):
         for i in self:
