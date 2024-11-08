@@ -11,8 +11,3 @@ class First(models.Model):
         ('female', 'Female')
     ], string='Gender', required=True)
     tag_ids= fields.Many2many('user.tag','user_tag_rel','user_id','tag_id')
-
-
-
-
-
