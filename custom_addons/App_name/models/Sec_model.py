@@ -1,10 +1,4 @@
-from email.policy import default
-
-from docutils.nodes import reference
-
 from odoo import fields, models,api
-from odoo.api import ondelete
-from odoo.http import request
 
 
 class Sec(models.Model):
