@@ -4,11 +4,12 @@
         <field name="name">view.user.list</field>
         <field name="model">first.module</field>
         <field name="arch" type="xml">
-            <list string="Patients" >
+            <list string="Patients">
                 <field name="name"/>
                 <field name="gender"/>
+                <field name="image" widget="image" class="oe_avatar" options="{'size': [80, 80]}"/>
                 <field name="date_of_birth" optional="hide"/>
-                <field name="tag_ids" optional="hide"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
             </list>
         </field>
     </record>
@@ -22,6 +23,7 @@
                         <group>
                             <field name="name"/>
                             <field name="gender"/>
+                            <field name="image" widget="image" class="oe_avatar" options="{'size': [180, 180]}"/>
                         </group>
                         <group>
                             <field name="date_of_birth"/>
