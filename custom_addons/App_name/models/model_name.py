@@ -14,6 +14,7 @@ class First(models.Model):
         ('male', 'Male'),
         ('female', 'Female')
     ], string='Gender', required=True)
+
     tag_ids= fields.Many2many('user.tag','user_tag_rel','user_id','tag_id')
     image = fields.Binary("Employee Image", attachment=True, required=True, store=True)
     face_encoding = fields.Json(string="Face Encoding",compute="_compute_face_encoding",store=True)
