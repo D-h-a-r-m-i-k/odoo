@@ -8,8 +8,10 @@
                 <sheet>
                     <group>
                         <field name="image" widget="image" class="oe_avatar"/>
-                        <button name="action_recognize_employee" string="Recognize Face" type="object" class="btn-primary"/>
+                        <button name="action_recognize_employee" string="Recognize Face" type="object" class="btn-primary" invisible="check_out != False"/>
                         <field name="name" readonly="1"/>
+                        <field name="check_in" readonly="1"/>
+                        <field name="check_out" readonly="1"/>
                         <field name="date_of_birth" readonly="1"/>
                         <field name="gender" readonly="1"/>
                     </group>
@@ -25,7 +27,9 @@
         <field name="arch" type="xml">
             <list string="Attendance Records">
                 <field name="name"/>
-                <field name="date_of_birth"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+                <field name="working_hours"/>
                 <field name="gender"/>
             </list>
         </field>

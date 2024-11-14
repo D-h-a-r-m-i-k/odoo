@@ -48,7 +48,7 @@
 
     <!-- Submenu under Attendance -->
     <menuitem id="check_in_out"
-              name="Check in/out"
+              name="Records"
               parent="Attendance"
               action="action_attendance" />
 </odoo>

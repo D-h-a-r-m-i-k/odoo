@@ -17,6 +17,9 @@ class Attendance(models.Model):
         ('male', 'Male'),
         ('female', 'Female')
     ], string='Gender')
+    check_in = fields.Datetime(string="Check In")
+    check_out = fields.Datetime(string="Check Out")
+    working_hours = fields.Float(string="Working Hours", compute='_compute_working_hours', store=True)
     new_face_encoding = fields.Json(string="Face Encoding", compute="_compute_face_encoding", store=True)
 
     def action_recognize_employee(self):
@@ -41,16 +44,38 @@ class Attendance(models.Model):
                                 record.name = employee.name
                                 record.date_of_birth = employee.date_of_birth
                                 record.gender = employee.gender
-                    else:
-                        record.name = 'No face detected 😶‍🌫️'
-                        record.date_of_birth = None
-                        record.gender = None
+                                if record.check_in:
+                                    record.check_out=fields.Datetime.now()
+                                    break
+                                else:
+                                    record.check_in = fields.Datetime.now()
+                                    break
                 else:
-                    record.name = 'unidentified😶‍🌫️'
+                    record.name = 'person was not found 😶‍🌫️'
                     record.date_of_birth = None
                     record.gender = None
             else:
                 clear()
+
+    @api.depends('check_in', 'check_out')
+    def _compute_working_hours(self):
+        """
+        Compute the working hours between check-in and check-out times.
+        """
+        for attendance in self:
+            if attendance.check_in and attendance.check_out:
+                # Calculate the difference between check_in and check_out
+                delta = attendance.check_out - attendance.check_in
+
+                # Ensure that delta is a positive time difference
+                if delta.total_seconds() < 0:
+                    attendance.working_hours = 0.0
+                else:
+                    # Convert total seconds to hours and store it in working_hours
+                    attendance.working_hours = delta.total_seconds() / 3600.0
+            else:
+                attendance.working_hours = 0.0
+
     # def _match_face_encoding(self, face_encoding):
     #
     #     employees = self.env['first.module'].search([])  # Get all employees
