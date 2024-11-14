@@ -7,7 +7,6 @@
             <form string="Attendance">
                 <sheet>
                     <group>
-                        <button name="open_camera_popup" string="Take Picture" type="object" class="btn-primary"/>
                         <field name="image" widget="image" class="oe_avatar"/>
                         <button name="action_recognize_employee" string="Recognize Face" type="object" class="btn-primary"/>
                         <field name="name" readonly="1"/>

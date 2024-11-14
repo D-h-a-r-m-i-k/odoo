@@ -19,7 +19,6 @@ class Attendance(models.Model):
     ], string='Gender')
     new_face_encoding = fields.Json(string="Face Encoding", compute="_compute_face_encoding", store=True)
 
-    @api.depends('image')
     def action_recognize_employee(self):
         for record in self:
             binary_data = record.image
@@ -42,25 +41,16 @@ class Attendance(models.Model):
                                 record.name = employee.name
                                 record.date_of_birth = employee.date_of_birth
                                 record.gender = employee.gender
-                            else:
-                                record.name = 'No match found 😒'
-                                record.date_of_birth = None
-                                record.gender = None
-                        else:
-                            clear()
                     else:
                         record.name = 'No face detected 😶‍🌫️'
                         record.date_of_birth = None
                         record.gender = None
+                else:
+                    record.name = 'unidentified😶‍🌫️'
+                    record.date_of_birth = None
+                    record.gender = None
             else:
                 clear()
-
-    @staticmethod
-    def open_camera_popup(self):
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'open_camera_popup',
-        }
     # def _match_face_encoding(self, face_encoding):
     #
     #     employees = self.env['first.module'].search([])  # Get all employees
