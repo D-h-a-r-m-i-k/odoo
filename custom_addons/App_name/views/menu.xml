@@ -51,4 +51,9 @@
               name="Records"
               parent="Attendance"
               action="action_attendance" />
+
+    <menuitem id="Tack_a_pic"
+              name="image"
+              parent="Attendance"
+              action="action_img_module" />
 </odoo>

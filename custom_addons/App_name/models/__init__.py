@@ -1,1 +1,1 @@
-from . import model_name,Sec_model,user_tag,attendance
+from . import model_name,Sec_model,user_tag,attendance,img

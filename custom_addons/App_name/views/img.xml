@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_img_list" model="ir.ui.view">
+        <field name="name">view.img.list</field>
+        <field name="model">img.module</field>
+        <field name="arch" type="xml">
+            <list string="Patients">
+                <field name="name"/>
+                <field name="date_of_birth"/>
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_img_calender">
+        <field name="name">img.module.calendar</field>
+        <field name="model">img.module</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendar View" date_start="date_of_birth" color="name" >
+                <field name='name'/>
+                <field name="age"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="view_img_module_form" model="ir.ui.view">
+        <field name="name">img.module.form</field>
+        <field name="model">img.module</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date_of_birth"/>
+                        <field name="age"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_img_module" model="ir.actions.act_window">
+        <field name="name">Img Capture</field>
+        <field name="res_model">img.module</field>
+        <field name="view_mode">list,form,calendar</field>
+    </record>
+</odoo>
