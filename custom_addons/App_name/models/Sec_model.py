@@ -25,7 +25,10 @@ class Sec(models.Model):
 
     def _compute_display_name(self):
         for rec in self:
-            rec.display_name=f"[{rec.reference}] {rec.user_name.name}"
+            if rec.user_name.name :
+                rec.display_name=f"[{rec.reference}] {rec.user_name.name}"
+            else:
+                rec.display_name = f"[{rec.reference}]"
 
     @api.depends('appointment_line_ides','appointment_line_ides.quantity')
     def _compute_total_qty(self):

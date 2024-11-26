@@ -13,6 +13,42 @@
             </list>
         </field>
     </record>
+
+    <record id="view_first_kanban" model="ir.ui.view">
+        <field name="name">first.kanban.view</field>
+        <field name="model">first.module</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="date_of_birth"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong>
+                                        <field name="image" widget="image" class="oe_avatar" options="{'size': [100, 100]}"/>
+                                        <field name="name"/>
+                                    </strong>
+                                    </div>
+                            </div>
+                            <t>
+                                <hr class="mt8 mb8"/>
+                                <field name="gender"/>
+                            </t>
+                            <div>
+                                <field name="date_of_birth"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="view_user_form" model="ir.ui.view">
         <field name="name">view.user.form</field>
         <field name="model">first.module</field>
@@ -38,7 +74,7 @@
     <record id="action_first_user" model="ir.actions.act_window">
         <field name="name">User</field>
         <field name="res_model">first.module</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new User

@@ -1,36 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <!-- Root Menu -->
     <menuitem id="First_root"
               name="First"
-              web_icon="App_name,static/description/icon.png"/>
+              web_icon="App_name,static/description/icon.png" />
+
+    <!-- Parent Menus -->
     <menuitem id="First_parent"
               name="First_parent"
-              parent="First_root"/>
+              parent="First_root" />
+
     <menuitem id="sec_parent"
               name="Sec_parent"
-              parent="First_root"
-              />
+              parent="First_root" />
 
+    <menuitem id="Attendance"
+              name="Attendance"
+              parent="First_root" />
+
+    <!-- Submenus under First_parent -->
     <menuitem id="First_menu"
               name="First_menu"
               parent="First_parent"
-              action='action_first_user'/>
+              action="action_first_user" />
+
     <menuitem id="Record_menu"
               name="Record_menu"
               parent="First_parent"
-              action='action_record_user'/>
+              action="action_record_user" />
 
+    <!-- Submenus under sec_parent -->
     <menuitem id="sec_menu"
               name="Appointment"
               parent="sec_parent"
-              action="action_appointment"/>
+              action="action_appointment" />
+
     <menuitem id="sec_menu_line"
               name="Appointment_line"
               parent="sec_parent"
-              action="action_user_line"/>
+              action="action_user_line" />
+
     <menuitem id="tag_menu"
               name="Tags"
               sequence="20"
               parent="sec_parent"
-              action="action_user_tag"/>
+              action="action_user_tag" />
+
+    <!-- Submenu under Attendance -->
+    <menuitem id="check_in_out"
+              name="Records"
+              parent="Attendance"
+              action="action_attendance" />
+
+    <menuitem id="Tack_a_pic"
+              name="image"
+              parent="Attendance"
+              action="action_img_module" />
 </odoo>
