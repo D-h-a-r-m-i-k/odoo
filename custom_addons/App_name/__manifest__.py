@@ -9,6 +9,8 @@
     'data': [
         'security/ir.model.access.csv',
         'data/sequence.xml',
+        'views/img.xml',
+        'views/attendance_views.xml',
         'views/appointment_line.xml',
         'views/sec_view.xml',
         'views/record_user.xml',
