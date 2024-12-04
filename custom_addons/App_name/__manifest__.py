@@ -16,7 +16,9 @@
         'views/record_user.xml',
         'views/user.xml',
         'views/menu.xml',
-        'views/user_tag_views.xml'
+        'views/user_tag_views.xml',
+        'report/employee_report.xml',
+        'report/report.xml',
     ],
     'installable': True,
 }

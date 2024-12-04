@@ -7,39 +7,9 @@
             <list string="Patients">
                 <field name="name"/>
                 <field name="date_of_birth"/>
-            </list>
-        </field>
-    </record>
-    <record model="ir.ui.view" id="view_img_calender">
-        <field name="name">img.module.calendar</field>
-        <field name="model">img.module</field>
-        <field name="arch" type="xml">
-            <calendar string="Calendar View" date_start="date_of_birth" color="name">
-                <field name='name'/>
                 <field name="age"/>
-            </calendar>
-        </field>
-    </record>
-
-    <record id="view_img_graph" model="ir.ui.view">
-        <field name="name">img.module.graph</field>
-        <field name="model">img.module</field>
-        <field name="arch" type="xml">
-            <graph string="Activities Analysis" sample="1">
-                <field name="name"/>
-                <field name="date_of_birth" interval="month"/>
-            </graph>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_img_search">
-        <field name="name">img.module.search</field>
-        <field name="model">img.module</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('date_of_birth', 'ilike', self)]"/>
-                <field name="date_of_birth"/>
-            </search>
+                <field name="cont_no"/>
+            </list>
         </field>
     </record>
 
@@ -53,6 +23,7 @@
                         <field name="name"/>
                         <field name="date_of_birth"/>
                         <field name="age"/>
+                        <field name="cont_no"/>
                     </group>
                 </sheet>
             </form>
@@ -63,6 +34,6 @@
     <record id="action_img_module" model="ir.actions.act_window">
         <field name="name">Img Capture</field>
         <field name="res_model">img.module</field>
-        <field name="view_mode">list,form,calendar,graph</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

@@ -1,4 +1,6 @@
-from odoo import fields, models, api
+from datetime import datetime
+
+from odoo import fields, models, api, _
 import base64
 import face_recognition
 import numpy as np
@@ -17,6 +19,26 @@ class First(models.Model):
     tag_ids= fields.Many2many('user.tag','user_tag_rel','user_id','tag_id')
     image = fields.Binary("Employee Image", attachment=True, required=True, store=True)
     face_encoding = fields.Json(string="Face Encoding",compute="_compute_face_encoding",store=True)
+    cont_no=fields.Char(string='Cont.no')
+    attendance_count=fields.Integer(string='Attendance_count',compute='get_count')
+    salary=fields.Integer(string='Salary per month',help='Base Salary per Month', required=True)
+    standard_working_hours=fields.Float(string='Standard Working Hours',help='Min Working Hours', required=True,default=8.00)
+
+    def get_count(self):
+        cont = self.env['attendance.module'].search_count([('name','=',self.name)])
+        self.attendance_count=cont
+
+    def lala(self):
+        return {
+            'name': _('Attendance'),
+            'domain':[('name','=',self.name)],
+            'view_type': 'form',
+            'view_mode': 'list',
+            'res_model': 'attendance.module',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+        }
+
 
     @api.depends('image')
     def _compute_face_encoding(self):

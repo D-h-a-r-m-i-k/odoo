@@ -29,10 +29,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <strong>
-                                        <field name="image" widget="image" class="oe_avatar" options="{'size': [100, 100]}"/>
+                                        <field name="image" widget="image" class="oe_avatar"
+                                               options="{'size': [100, 100]}"/>
                                         <field name="name"/>
                                     </strong>
-                                    </div>
+                                </div>
                             </div>
                             <t>
                                 <hr class="mt8 mb8"/>
@@ -41,6 +42,7 @@
                             <div>
                                 <field name="date_of_birth"/>
                                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="cont_no"/>
                             </div>
                         </div>
                     </t>
@@ -55,15 +57,26 @@
         <field name="arch" type="xml">
             <form string="Patients">
                 <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button class="oe_stat_button" type="object" name="lala" icon="fa-calendar">
+                            <div class="o_stat_info">
+                                <field name="attendance_count"/>
+                                <span class="o_stat_text">Attendance</span>
+                            </div>
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name"/>
                             <field name="gender"/>
-                            <field name="image" widget="image" class="oe_avatar" options="{'size': [180, 180]}"/>
-                        </group>
-                        <group>
                             <field name="date_of_birth"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="cont_no"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar" options="{'size': [180, 180]}"/>
+                            <field name="salary"/>
+                            <field name="standard_working_hours" widget="float_time"/>
                         </group>
                     </group>
                 </sheet>
