@@ -1,4 +1,6 @@
 from click import clear
+import calendar
+from datetime import datetime, timedelta
 from odoo import fields, models, api
 import base64
 import face_recognition
@@ -59,19 +61,12 @@ class Attendance(models.Model):
 
     @api.depends('check_in', 'check_out')
     def _compute_working_hours(self):
-        """
-        Compute the working hours between check-in and check-out times.
-        """
         for attendance in self:
             if attendance.check_in and attendance.check_out:
-                # Calculate the difference between check_in and check_out
                 delta = attendance.check_out - attendance.check_in
-
-                # Ensure that delta is a positive time difference
                 if delta.total_seconds() < 0:
                     attendance.working_hours = 0.0
                 else:
-                    # Convert total seconds to hours and store it in working_hours
                     attendance.working_hours = delta.total_seconds() / 3600.0
             else:
                 attendance.working_hours = 0.0
