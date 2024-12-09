@@ -24,6 +24,15 @@ class Attendance(models.Model):
     working_hours = fields.Float(string="Working Hours", compute='_compute_working_hours', store=True)
     new_face_encoding = fields.Json(string="Face Encoding", compute="_compute_face_encoding", store=True)
 
+    def wiz_open(self):
+        return self.env['ir.actions.act_window']._for_xml_id('App_name.face_detection_wizard_action')
+        # return {
+        #     'type':'ir.actions.act_window',
+        #     'res_model':'face.detection.wizard',
+        #     'view_mode':'form',
+        #     'target':'new'
+        # }
+
     def action_recognize_employee(self):
         for record in self:
             binary_data = record.image
