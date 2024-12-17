@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_img_module_wizard_form" model="ir.ui.view">
+        <field name="name">img.module.wizard.form</field>
+        <field name="model">img.module.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="date_of_birth" />
+                            <field name="age"/>
+                            <field name="cont_no" />
+                            <field name="email"/>
+                            <field name="rating" widget="priority"/>
+                            <field name='button_int' widget="float_toggle" options="{'range':[0,1,2,3,4,5,6,7,8,9,10]}" style="width:300px;"/>
+                        </group>
+                        <group>
+                            <field name="street" />
+                            <field name="street2" />
+                            <field name="city" />
+                            <field name="state_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="country_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="country_code" readonly="1"/>
+                            <field name="zip"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="appointment_line" string="there usage">
+                            <field name="details">
+                                <list editable="top" widget="section_and_note_one2many">
+                                    <control>
+                                        <create string="Add a product"/>
+                                        <create string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div style="float:right; padding:30px; ">
+                        <div style="float:left">
+                            <h6 style="margin-bottom:-5px; margin-top:5px;">In hand Salary:</h6>
+                            <br/>
+                            <h6 style="margin-bottom:-5px;">EPF + ESI</h6>
+                            <br/>
+                            <h6>CTC Salary</h6>
+                        </div>
+                        <div style="float:right">
+                            <field name="hand_salary"/>
+                            <br/>
+                            <field name="epf_esi"/>
+                            <br/>
+                            <field name="ctc_salary"/>
+                        </div>
+                    </div>
+                    <footer>
+                        <button name="update_data" type="object" class="oe_highlight" string="update"/>
+                         <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_img_module_wizard" model="ir.actions.act_window">
+        <field name="name">img.module.wizard</field>
+        <field name="res_model">img.module.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

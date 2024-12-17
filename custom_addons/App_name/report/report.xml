@@ -9,4 +9,13 @@
         <field name="binding_model_id" ref="model_first_module"/>
         <field name="binding_type">report</field>
     </record>
+    <record id="action_report_demo_test_show" model="ir.actions.report">
+        <field name="name">test_report</field>
+        <field name="model">img.module</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">App_name.Report_test_demo_template</field>
+        <field name="report_file">App_name.Report_test_demo_template</field>
+        <field name="binding_model_id" ref="model_img_module"/>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

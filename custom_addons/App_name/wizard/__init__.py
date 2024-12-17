@@ -1,1 +1,1 @@
-from . import face_detection_wizard
+from . import face_detection_wizard,img_wizard

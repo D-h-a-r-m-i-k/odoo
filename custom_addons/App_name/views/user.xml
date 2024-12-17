@@ -9,7 +9,7 @@
                 <field name="gender"/>
                 <field name="image" widget="image" class="oe_avatar" options="{'size': [80, 80]}"/>
                 <field name="date_of_birth" optional="hide"/>
-                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
+                <field name="hobie" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
             </list>
         </field>
     </record>
@@ -22,7 +22,7 @@
                 <field name="name"/>
                 <field name="gender"/>
                 <field name="date_of_birth"/>
-                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="hobie" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <templates>
                     <t t-name="card">
                         <div t-attf-class="oe_kanban_global_click">
@@ -41,7 +41,7 @@
                             </t>
                             <div>
                                 <field name="date_of_birth"/>
-                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="hobie" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                 <field name="cont_no"/>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <field name="name"/>
                             <field name="gender"/>
                             <field name="date_of_birth"/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="hobie" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="cont_no"/>
                         </group>
                         <group>

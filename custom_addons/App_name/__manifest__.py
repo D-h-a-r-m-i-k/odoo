@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'data/sequence.xml',
         'wizard/face_detaction_wizard_view.xml',
+        'wizard/img_wizard_view.xml',
         'views/img.xml',
         'views/attendance_views.xml',
         'views/appointment_line.xml',
@@ -18,8 +19,14 @@
         'views/user.xml',
         'views/menu.xml',
         'views/user_tag_views.xml',
+        'report/test_demo.xml',
         'report/employee_report.xml',
         'report/report.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'static/src/js/your_module.js',
+        ],
+    },
     'installable': True,
 }
