@@ -1,4 +1,3 @@
-from datetime import datetime
 
 from odoo import fields, models, api, _
 import base64
@@ -16,7 +15,7 @@ class First(models.Model):
         ('male', 'Male'),
         ('female', 'Female')
     ], string='Gender', required=True)
-    tag_ids= fields.Many2many('user.tag','user_tag_rel','user_id','tag_id')
+    hobie= fields.Many2many('user.tag','user_tag_rel','user_id','tag_id','Hobbies')
     image = fields.Binary("Employee Image", attachment=True, required=True, store=True)
     face_encoding = fields.Json(string="Face Encoding",compute="_compute_face_encoding",store=True)
     cont_no=fields.Char(string='Cont.no')
@@ -27,6 +26,15 @@ class First(models.Model):
     def get_count(self):
         cont = self.env['attendance.module'].search_count([('name','=',self.name)])
         self.attendance_count=cont
+
+    @api.model_create_multi
+    def name_get(self):
+        result=[]
+        for rec in self:
+            name= rec.name+'-'+rec.cont_no
+            result.append((rec.id,name))
+        return result
+
 
     def lala(self):
         return {

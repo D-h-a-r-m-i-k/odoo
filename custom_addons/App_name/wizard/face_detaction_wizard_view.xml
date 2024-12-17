@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="face_detection_wizard_form" model="ir.ui.view">
+        <field name="name">face.detection.Wizard.form</field>
+        <field name="model">face.detection.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <footer>
+                    <button name="show" string="Show" type="object"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="face_detection_wizard_action" model="ir.actions.act_window">
+        <field name="name">face.detection</field>
+        <field name="res_model">face.detection.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

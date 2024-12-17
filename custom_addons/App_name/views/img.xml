@@ -4,36 +4,232 @@
         <field name="name">view.img.list</field>
         <field name="model">img.module</field>
         <field name="arch" type="xml">
-            <list string="Patients">
+            <list string="Patients" decoration-warning="status=='active'" decoration-success="status!='active'">
+                <!--                <decoration-info=blue color, decoration-danger=red, decoration-success=green, decoration-warning=orange, decoration-muted=light_gray, decoration-bf=bold_record>-->
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="date_of_birth"/>
+                <field name="age" avg="average of the age"/>
+                <field name="cont_no"/>
+                <field name="email"/>
+                <field name="country_id" widget="many2onebutton"/>
+                <field name="ctc_salary" sum="sum of all ctc values"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_img_kanban" model="ir.ui.view">
+        <field name="name">view.img.kanban</field>
+        <field name="model">img.module</field>
+        <field name="arch" type="xml">
+            <kanban string="Demo Kanban" class="o_res_partner_kanban">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_box"
+                             style="border-radius: 8px; box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); background-color: #ffffff; padding: 10px;">
+                            <!-- Title Section with Odoo Primary Color -->
+                            <div class="oe_kanban_header"
+                                 style="background-color: #7b6b9e; padding: 10px; border-radius: 6px;">
+                                <strong style="font-size: 16px; color: #dad0f1;">
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+
+                            <!-- Field Values Section -->
+                            <div class="oe_kanban_details"
+                                 style="margin-top: 10px; background-color:#dad0f1 border-radius: 8px">
+
+                                <!-- Displaying Date of Birth -->
+                                <div class="kanban-field" style="margin-bottom: 12px;">
+                                    <span style="font-weight: 600; color: #6c757d;">Date of Birth:</span>
+                                    <field name="date_of_birth" style="color: #2e3d49;"/>
+                                </div>
+
+                                <!-- Displaying Age -->
+                                <div class="kanban-field" style="margin-bottom: 12px;">
+                                    <span style="font-weight: 600; color: #6c757d;">Age:</span>
+                                    <field name="age" style="color: #2e3d49;"/>
+                                </div>
+
+                                <!-- Displaying Contact Number -->
+                                <div class="kanban-field" style="margin-bottom: 12px;">
+                                    <span style="font-weight: 600; color: #6c757d;">Contact No:</span>
+                                    <field name="cont_no" style="color: #2e3d49;"/>
+                                </div>
+
+                                <!-- Displaying Email -->
+                                <div class="kanban-field" style="margin-bottom: 12px;">
+                                    <span style="font-weight: 600; color: #6c757d;">Email:</span>
+                                    <field name="email" style="color: #2e3d49;"/>
+                                </div>
+
+                                <!-- Displaying Country -->
+                                <div class="kanban-field" style="margin-bottom: 12px;">
+                                    <span style="font-weight: 600; color: #6c757d;">Country:</span>
+                                    <field name="country_id" widget="many2onebutton" style="color: #2e3d49;"/>
+                                </div>
+
+                                <!-- Displaying Status with Color Coding -->
+                                <div class="kanban-field" style="margin-bottom: 12px;">
+                                    <span style="font-weight: 600; color: #6c757d;">Status:</span>
+                                    <field name="status" widget="statusbar" options="{'clickable': True}"
+                                           style="background-color: #f5f7fa; border-radius: 5px; padding: 5px;"/>
+                                </div>
+
+                            </div>
+
+                            <!-- Conditional Decoration for Status Color -->
+                            <div class="oe_kanban_footer" style="margin-top: 10px;">
+                                <t t-if="record.status == 'draft'">
+                                    <div style="color: #faad14; font-weight: bold;">Draft</div>
+                                </t>
+                                <t t-if="record.status == 'approved'">
+                                    <div style="color: #52c41a; font-weight: bold;">Approved</div>
+                                </t>
+                                <t t-if="record.status == 'rejected'">
+                                    <div style="color: #ff4d4f; font-weight: bold;">Rejected</div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_img_search" model="ir.ui.view">
+        <field name="name">view.img.search</field>
+        <field name="model">img.module</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
                 <field name="name"/>
                 <field name="date_of_birth"/>
                 <field name="age"/>
                 <field name="cont_no"/>
-            </list>
+                <field name="email" filter_domain="['|',('email','ilike',self),('cont_no','ilike',self)]"/>
+                <separator/>
+                <filter string="India" name="india" domain="[('country_id','=','India')]"/>
+                <filter string="Canada" name="canada" domain="[('country_id','=','Canada')]"/>
+                <filter string="Register" name="register" domain="[('status','=','register')]"/>
+                <filter string="Active" name="active" domain="[('status','=','active')]"/>
+                <separator/>
+                <group string="Group By" expand="0">
+                    <filter string="Status" name="status" context="{'group_by':'status'}"/>
+                    <filter string="Country_id" name="country_id" context="{'group_by':'country_id'}"/>
+                </group>
+
+            </search>
         </field>
     </record>
+
 
     <record id="view_img_module_form" model="ir.ui.view">
         <field name="name">img.module.form</field>
         <field name="model">img.module</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="first_fun" string="Object" type="object" invisible="status =='register'"/>
+                    <button name="search_fun" string="search" type="object" invisible="status =='register'"/>
+                    <button name="delete_fun_one2many" string="Delete One2many" type="object" invisible="status =='register'"/>
+                    <button name="state_register" string="Save" type="object" invisible="status == 'register'"
+                            class="oe_highlight"/>
+                    <button name="state_active" string="Edit" type="object" invisible="status != 'register'"
+                            class="oe_highlight"/>
+                    <button name="%(project_todo.project_task_action_todo)d" string="Action button" type="action" class="oe_highlight" invisible="status =='register'"/>
+                    <button name="%(App_name.action_img_module_wizard)d" string=" Edit using wizard" type="action" invisible="status != 'register'"/>
+                    <field name="status" widget="statusbar" />
+                </header>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="date_of_birth"/>
-                        <field name="age"/>
-                        <field name="cont_no"/>
+                        <field name="date" readonly="1"/>
+                        <field name="date_time" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="User" readonly="1"/>
+                        <field name="company" readonly="1"/>
                     </group>
                 </sheet>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="status == 'register'"/>
+                            <field name="date_of_birth" readonly="status == 'register'"/>
+                            <field name="age"/>
+                            <field name="cont_no" readonly="status == 'register'"/>
+                            <field name="email" readonly="status == 'register'"/>
+                            <field name="hobie" widget="many2many_tags" options="{'color_field': 'color'}"
+                                   readonly="status == 'register'"/>
+                            <field name="rating" widget="priority" readonly="status == 'register'"/>
+                        </group>
+                        <group>
+                            <field name="street" readonly="status == 'register'"/>
+                            <field name="street2" readonly="status == 'register'"/>
+                            <field name="city" readonly="status == 'register'"/>
+                            <field name="state_id" options="{'no_open':True,'no_create':True}"
+                                   readonly="status == 'register'"/>
+                            <field name="country_id" options="{'no_open':True,'no_create':True}"
+                                   readonly="status == 'register'"/>
+                            <field name="country_code" readonly="1"/>
+                            <field name="zip" readonly="status == 'register'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="appointment_line" string="there usage">
+                            <field name="details">
+                                <list editable="top" widget="section_and_note_one2many">
+                                    <control>
+                                        <create string="Add a product"/>
+                                        <create string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div style="float:right; padding:30px; ">
+                        <div style="float:left">
+                            <h6 style="margin-bottom:-5px; margin-top:5px;">In hand Salary:</h6>
+                            <br/>
+                            <h6 style="margin-bottom:-5px;">EPF + ESI</h6>
+                            <br/>
+                            <h6>CTC Salary</h6>
+                        </div>
+                        <div style="float:right">
+                            <field name="hand_salary"/>
+                            <br/>
+                            <field name="epf_esi"/>
+                            <br/>
+                            <field name="ctc_salary"/>
+                        </div>
+                    </div>
+                </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
 
+     <record id="menu_python_fun_tata" model="ir.actions.server">
+        <field name="name">to call tata</field>
+        <field name="path">crm</field>
+        <field name="model_id" ref="App_name.model_img_module"/>
+        <field name="state">code</field>
+        <field name="code">model.tata()</field>
+    </record>
 
     <record id="action_img_module" model="ir.actions.act_window">
         <field name="name">Img Capture</field>
         <field name="res_model">img.module</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,search,kanban</field>
+        <field name="context">{'search_default_india':1,
+            'search_default_canada':1
+            }
+        </field>
     </record>
 </odoo>

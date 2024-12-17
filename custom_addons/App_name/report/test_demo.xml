@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="Report_test_demo_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <!-- Page Wrapper -->
+                        <div class="page" style="font-family: 'Arial', sans-serif; padding: 20px; line-height: 1.6;">
+                            <div style="position:absolute;text-align:center;z-index:-1;border:0;opacity:0.5;padding-top:330px;padding:145px;">
+                                <img t-att-src="image_data_uri(doc.company.logo)"
+                                     style="height:400px;width:400;opacity:0.15;"/>
+                            </div>
+                            <!-- Report Header -->
+                            <div style="text-align: center; padding-bottom: 10px; border-bottom: 4px solid #004085;">
+                                <h1 style="color: #004085; margin: 0; font-size: 28px;">Employee Report</h1>
+                                <p style="color: #6C757D; font-size: 14px;">Generated for professional records</p>
+                            </div>
+
+                            <!-- Personal Information -->
+                            <div style="margin-top: 20px;">
+                                <h3 style="color: #007BFF; border-bottom: 2px solid #007BFF; padding-bottom: 5px;">
+                                    Personal Information
+                                </h3>
+                                <table style="width: 100%; border-spacing: 8px; margin-top: 10px;">
+                                    <tr>
+                                        <td>
+                                            <strong>Name:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.name or 'N/A'"/>
+                                        </td>
+                                        <td>
+                                            <strong>Date of Birth:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.date_of_birth or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Age:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.age or 'N/A'"/>
+                                            years
+                                        </td>
+                                        <td>
+                                            <strong>Contact No:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.cont_no or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Email:</strong>
+                                        </td>
+                                        <td colspan="3">
+                                            <t t-esc="doc.email or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Salary Details -->
+                            <div style="margin-top: 20px;">
+                                <h3 style="color: #28A745; border-bottom: 2px solid #28A745; padding-bottom: 5px;">
+                                    Salary Details
+                                </h3>
+                                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                                    <thead>
+                                        <tr style="background-color: #E9FBE8;">
+                                            <th style="padding: 8px; border: 1px solid #DDD;">Hand Salary</th>
+                                            <th style="padding: 8px; border: 1px solid #DDD;">EPF + ESI</th>
+                                            <th style="padding: 8px; border: 1px solid #DDD;">CTC Salary</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 8px; border: 1px solid #DDD; text-align: center;">
+                                                <t t-esc="doc.hand_salary or 0"/>
+                                                USD
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #DDD; text-align: center;">
+                                                <t t-esc="doc.epf_esi or 0"/>
+                                                USD
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #DDD; text-align: center;">
+                                                <t t-esc="doc.ctc_salary or 0"/>
+                                                USD
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Location Details -->
+                            <div style="margin-top: 20px;">
+                                <h3 style="color: #17A2B8; border-bottom: 2px solid #17A2B8; padding-bottom: 5px;">
+                                    Location
+                                </h3>
+                                <table style="width: 100%; margin-top: 10px;">
+                                    <tr>
+                                        <td>
+                                            <strong>Country:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.country_id.name or 'N/A'"/>
+                                        </td>
+                                        <td>
+                                            <strong>State:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.state_id.name or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>City:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.city or 'N/A'"/>
+                                        </td>
+                                        <td>
+                                            <strong>Street:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="doc.street or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>ZIP:</strong>
+                                        </td>
+                                        <td colspan="3">
+                                            <t t-esc="doc.zip or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Hobbies -->
+                            <div style="margin-top: 20px;">
+                                <h3 style="color: #FFC107; border-bottom: 2px solid #FFC107; padding-bottom: 5px;">
+                                    Hobbies
+                                </h3>
+                                <ul style="list-style-type: square; padding-left: 20px; margin-top: 10px;">
+                                    <t t-if="doc.hobie">
+                                        <t t-foreach="doc.hobie" t-as="hobby">
+                                            <li style="margin-bottom: 5px;">
+                                                <t t-esc="hobby.name"/>
+                                            </li>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <li>No hobbies available</li>
+                                    </t>
+                                </ul>
+                            </div>
+
+                            <!-- Report Footer -->
+                            <div style="text-align: center; margin-top: 30px; padding-top: 10px; border-top: 4px solid #004085;">
+                                <p style="font-size: 12px; color: #6C757D;">
+                                    Report Generated On:
+                                    <t t-esc="doc.date_time.strftime('%Y-%m-%d %H:%M:%S')"/>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

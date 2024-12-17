@@ -5,6 +5,10 @@
         <field name="model">attendance.module</field>
         <field name="arch" type="xml">
             <form string="Attendance">
+                <header>
+                    <button name="wiz_open" string="Open Wizard" type="object"/>
+                    <button name="App_name.face_detection_wizard_action" string="Open Wizard_action" type="action"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="image" widget="image" class="oe_avatar"/>
@@ -39,8 +43,8 @@
             <calendar string="Attendance View" date_start="check_in" date_stop="check_out" color="name" mode="day"
                       event_open_popup="True" event_limit="2">
                 <field name="name" filters="1" avatar_field="image"/>
-                <field name="check_in" />
-                <field name="check_out" />
+                <field name="check_in"/>
+                <field name="check_out"/>
                 <field name="date_of_birth" invisible="1"/>
                 <field name="gender" invisible="1"/>
             </calendar>

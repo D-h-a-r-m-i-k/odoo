@@ -56,4 +56,9 @@
               name="image"
               parent="Attendance"
               action="action_img_module" />
+
+    <menuitem id="demo"
+              name="call_by_fun"
+              parent="Attendance"
+              action="App_name.menu_python_fun_tata" />
 </odoo>

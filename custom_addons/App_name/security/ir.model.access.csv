@@ -5,3 +5,7 @@ access_appointment_lines_menu,first.line,model_first_line,base.group_user,1,1,1,
 access_User_tag,user.tag,model_user_tag,base.group_user,1,1,1,1
 access_attendance_module,attendance.module,model_attendance_module,base.group_user,1,1,1,1
 access_img_module,img.module,model_img_module,base.group_user,1,1,1,1
+access_face_detection_wizard,face.detection.wizard,model_face_detection_wizard,base.group_user,1,1,1,1
+access_details_module,details.module,model_details_module,base.group_user,1,1,1,1
+access_img_module_wizard,img.module.wizard,model_img_module_wizard,base.group_user,1,1,1,1
+access_details_module_wizard,details.module.wizard,model_details_module_wizard,base.group_user,1,1,1,1
