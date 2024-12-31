@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="create_inherit_form_view" model="ir.ui.view">
+        <field name="name">create.inherit.from.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="test"/>
+                <field name="img_data" string="data"/>
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+<!--            <xpath expr="//field[@name='partner_id']" position="replace"/>-->
+            <xpath expr="//notebook/page[@name='other_information']" position="before">
+                <page string="New Data">
+                    <group>
+                        <field name="test" string="name"/>
+                        <field name="img_data" string="data"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="create_inherit_list" model="ir.ui.view">
+        <field name="name">create.inherit.list</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="test"/>
+                <field name="img_data" string="data"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="create_inherit_search" model="ir.ui.view">
+        <field name="name">create.inherit.search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="test"/>
+                <field name="img_data" string="data"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

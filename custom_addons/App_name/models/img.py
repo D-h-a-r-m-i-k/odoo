@@ -1,5 +1,3 @@
-from email.policy import default
-
 from odoo import fields,models,api,_
 from datetime import date,datetime
 
@@ -10,7 +8,7 @@ from odoo.exceptions import ValidationError,UserError
 class Img(models.Model):
     _name ='img.module' #model name (table name)
     _description = 'that tack a pic and create a new record' # that for the description of that module
-    _rec_name = 'name' #taht use for the record we created that show with that filed
+    _rec_name = 'name' #that use for the record we created that show with that filed
     _order = 'age asc' #that is used for show the data in the order formate
     _inherit=['mail.thread','mail.activity.mixin'] #that is use for the show the chatter to for the tracking purposed
 
@@ -35,12 +33,14 @@ class Img(models.Model):
     epf_esi=fields.Float('Epo+Esi',tracking=True)
     ctc_salary=fields.Float('CTC',compute='count_ctc',tracking=True)
     rating=fields.Selection([('0','low'),('1','medium'),('2','high'),('3','excellent')],'Rate me',tracking=True)
+    currency_id = fields.Many2one('res.currency', 'Currency', related='country_id.currency_id', readonly=True,required=True)
 
-    date=fields.Date('Current date',default=lambda self: date.today())
+    date=fields.Date('Current date',default=lambda self: date.today(),store=True)
     date_time=fields.Datetime(string='Current date & time',default= lambda self: datetime.now())
     User=fields.Many2one('res.users',string='User',default= lambda self: self.env.user.id)
     company=fields.Many2one('res.company',string='Company',default= lambda self:self.env.user.company_id.id)
 
+    _sql_constraints =[('uniq_name','CHECK(age >= 18 )','Enter the valid date')]
     # @api.model_create_multi
     # def write(self, vals):
     #     res=super(Img,self).write(vals)
@@ -48,7 +48,8 @@ class Img(models.Model):
     #     return res
 
     def tata(self):
-        print('tata')
+        data=self.env['res.config.settings'].search([])
+        print(data)
 
     def unlink(self):
         for rec in self:
@@ -56,7 +57,17 @@ class Img(models.Model):
                 raise UserError(_('record is register that way record is not delete'))
         return super(Img, self).unlink()
 
+    @api.model
+    def demo_report(self,vals):
+        return  self.env.ref('App_name.action_report_demo_test_show').report_action(self.id)
 
+    def meta_data(self):
+        active_id = self.env.context.get('active_id')
+        data=self.env['img.module'].browse(active_id)
+        return {
+            'name':data.name,
+            'age':data.age,
+        }
 
     # @api.model
     # def create(self, vals_list):
@@ -92,11 +103,11 @@ class Img(models.Model):
                 rec.age = 0
 
     #that was mostly use for the show some validation Errors like show below
-    @api.constrains('age')
-    def val_age(self):
-        for rec in self:
-            if rec.age <=18:
-                raise ValidationError(_('the age above then 18'))
+    # @api.constrains('age')
+    # def val_age(self):
+    #     for rec in self:
+    #         if rec.age <=18:
+    #             raise ValidationError(_('the age above then 18'))
 
     #that was used for the clear the one2many field
     def delete_fun_one2many(self):

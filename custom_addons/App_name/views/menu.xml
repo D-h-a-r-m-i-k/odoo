@@ -7,15 +7,19 @@
 
     <!-- Parent Menus -->
     <menuitem id="First_parent"
-              name="First_parent"
+              name="Employee"
               parent="First_root" />
 
     <menuitem id="sec_parent"
-              name="Sec_parent"
+              name="Appointment"
               parent="First_root" />
 
     <menuitem id="Attendance"
               name="Attendance"
+              parent="First_root" />
+
+    <menuitem id="Configration"
+              name="Configration"
               parent="First_root" />
 
     <!-- Submenus under First_parent -->
@@ -43,22 +47,28 @@
     <menuitem id="tag_menu"
               name="Tags"
               sequence="20"
-              parent="sec_parent"
+              parent="Configration"
               action="action_user_tag" />
 
     <!-- Submenu under Attendance -->
     <menuitem id="check_in_out"
-              name="Records"
+              name="Attendance"
               parent="Attendance"
               action="action_attendance" />
 
     <menuitem id="Tack_a_pic"
-              name="image"
+              name="Demo"
               parent="Attendance"
               action="action_img_module" />
 
     <menuitem id="demo"
-              name="call_by_fun"
+              name="call by function"
               parent="Attendance"
               action="App_name.menu_python_fun_tata" />
+
+    <menuitem id="setting_custom"
+              name="settings"
+              parent="Configration"
+              action="App_name.action_first_config"
+    />
 </odoo>

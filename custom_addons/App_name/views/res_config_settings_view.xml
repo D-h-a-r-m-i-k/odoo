@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="first_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.first</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="First" string="First" name="First" groups="base.group_system">
+                        <block title="First Settings" name="First">
+                            <h1>Hello World!!</h1>
+                            <div class="o_form_label">Cancellation before</div>
+                            <div class="text-muted content-group mt16">
+                                <field name="register_days" class="text-center oe_inline"/>
+                                <span>Day</span>
+                            </div>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_first_config" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'First', 'bin_size': False}</field>
+        </record>
+
+    </data>
+</odoo>

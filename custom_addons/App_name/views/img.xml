@@ -13,8 +13,8 @@
                 <field name="cont_no"/>
                 <field name="email"/>
                 <field name="country_id" widget="many2onebutton"/>
-                <field name="ctc_salary" sum="sum of all ctc values"/>
                 <field name="status"/>
+                <field name="ctc_salary" sum="sum of all ctc values"/>
             </list>
         </field>
     </record>
@@ -119,6 +119,10 @@
                     <filter string="Status" name="status" context="{'group_by':'status'}"/>
                     <filter string="Country_id" name="country_id" context="{'group_by':'country_id'}"/>
                 </group>
+                <searchpanel>
+                    <field name="status" string="Status" icon="fa-truck" enable_counters="1"/>
+                    <field name="country_id" string="Country" select='multi' enable_counters="1"/>
+                </searchpanel>
 
             </search>
         </field>
@@ -131,18 +135,25 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="demo_report" string="Demo Report" type="object"/>
                     <button name="first_fun" string="Object" type="object" invisible="status =='register'"/>
                     <button name="search_fun" string="search" type="object" invisible="status =='register'"/>
-                    <button name="delete_fun_one2many" string="Delete One2many" type="object" invisible="status =='register'"/>
+                    <button name="delete_fun_one2many" string="Delete One2many" type="object"
+                            invisible="status =='register'"/>
                     <button name="state_register" string="Save" type="object" invisible="status == 'register'"
                             class="oe_highlight"/>
                     <button name="state_active" string="Edit" type="object" invisible="status != 'register'"
                             class="oe_highlight"/>
-                    <button name="%(project_todo.project_task_action_todo)d" string="Action button" type="action" class="oe_highlight" invisible="status =='register'"/>
-                    <button name="%(App_name.action_img_module_wizard)d" string=" Edit using wizard" type="action" invisible="status != 'register'"/>
-                    <field name="status" widget="statusbar" />
+                    <button name="%(project_todo.project_task_action_todo)d" string="Action button" type="action"
+                            class="oe_highlight" invisible="status =='register'"/>
+                    <button name="%(App_name.action_img_module_wizard)d" string=" Edit using wizard" type="action"
+                            invisible="status != 'register'"/>
+                    <field name="status" widget="statusbar"/>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Active" bg_color="text-bg-info" invisible="status == 'register'"/>
+                    <widget name="web_ribbon" title="Register" bg_color="text-bg-success"
+                            invisible="status != 'register'"/>
                     <group>
                         <field name="date" readonly="1"/>
                         <field name="date_time" readonly="1"/>
@@ -153,9 +164,13 @@
                     </group>
                 </sheet>
                 <sheet>
+                    <div class="oe_title mb28">
+                        <h1>
+                            <field name="name" options="{'line_breaks': False}" class="text-break" placeholder="Name" readonly="status == 'register'"/>
+                        </h1>
+                    </div>
                     <group>
                         <group>
-                            <field name="name" readonly="status == 'register'"/>
                             <field name="date_of_birth" readonly="status == 'register'"/>
                             <field name="age"/>
                             <field name="cont_no" readonly="status == 'register'"/>
@@ -165,15 +180,25 @@
                             <field name="rating" widget="priority" readonly="status == 'register'"/>
                         </group>
                         <group>
-                            <field name="street" readonly="status == 'register'"/>
-                            <field name="street2" readonly="status == 'register'"/>
-                            <field name="city" readonly="status == 'register'"/>
-                            <field name="state_id" options="{'no_open':True,'no_create':True}"
-                                   readonly="status == 'register'"/>
-                            <field name="country_id" options="{'no_open':True,'no_create':True}"
-                                   readonly="status == 'register'"/>
-                            <field name="country_code" readonly="1"/>
-                            <field name="zip" readonly="status == 'register'"/>
+                            <span>Address</span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"
+                                       readonly="status == 'register'"/>
+                                <field name="street2" placeholder="Street2..." class="o_address_street"
+                                       readonly="status == 'register'"/>
+                                <field name="city" placeholder="city" class="o_address_city"
+                                       readonly="status == 'register'"/>
+                                <field name="state_id" placeholder="state" class="o_address_state"
+                                       options="{'no_open':True,'no_create':True}"
+                                       readonly="status == 'register'"/>
+                                <field name="country_id" placeholder="country" class="o_address_country"
+                                       options="{'no_open':True,'no_create':True}"
+                                       readonly="status == 'register'"/>
+                                <field name="zip" class="o_address_zip" placeholder="Zip"
+                                       readonly="status == 'register'"/>
+                            </div>
+                            <field name="country_code" placeholder="country code" readonly="1"/>
+                            <field name="currency_id" placeholder="currency" readonly="1"/>
                         </group>
                     </group>
                     <notebook>
@@ -215,7 +240,7 @@
         </field>
     </record>
 
-     <record id="menu_python_fun_tata" model="ir.actions.server">
+    <record id="menu_python_fun_tata" model="ir.actions.server">
         <field name="name">to call tata</field>
         <field name="path">crm</field>
         <field name="model_id" ref="App_name.model_img_module"/>
