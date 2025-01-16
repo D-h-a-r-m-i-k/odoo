@@ -20,6 +20,7 @@
 
     <menuitem id="Configration"
               name="Configration"
+              groups="App_name.group_appointment_module_admin"
               parent="First_root" />
 
     <!-- Submenus under First_parent -->

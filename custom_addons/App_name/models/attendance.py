@@ -12,6 +12,7 @@ class Attendance(models.Model):
     _name = 'attendance.module'
     _description = 'make a attendance'
     _inherit = ['mail.thread']
+    _order = 'check_in desc'
     image = fields.Binary("Employee Image", attachment=True, required=True, store=True)
     name = fields.Char(string='Name')
     date_of_birth = fields.Date(string='DOB')

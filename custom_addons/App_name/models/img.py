@@ -1,3 +1,5 @@
+from email.policy import default
+import requests
 from odoo import fields,models,api,_
 from datetime import date,datetime
 
@@ -20,11 +22,12 @@ class Img(models.Model):
     cont_no=fields.Char(string='Cont.No',size=10,tracking=True)
     email=fields.Char(string='Email',tracking=True)
     hobie = fields.Many2many('user.tag', 'Img_tag_rel', 'lead_id', 'tag_id', string='Hobbies',help="Classify and analyze your lead/opportunity categories like: Training, Service",tracking=True)
-    country_id = fields.Many2one(string="Country", comodel_name='res.country',help="Country for which this tag is available, when applied on taxes.",tracking=True)
+    country_id = fields.Many2one(string="Country", comodel_name='res.country',help="Country for which this tag is available, when applied on taxes.",tracking=True,default=104)
     country_code=fields.Char(string='country code',related='country_id.code',tracking=True)
-    state_id = fields.Many2one("res.country.state", string='State',compute='_compute_partner_address_values', readonly=False, store=True,domain="[('country_id', '=?', country_id)]",tracking=True)
+    state_id = fields.Many2one("res.country.state", string='State', readonly=False, store=True,domain="[('country_id', '=?', country_id)]",tracking=True)
     street = fields.Char('Street', readonly=False, store=True,tracking=True)
     street2 = fields.Char('Street2', readonly=False, store=True,tracking=True)
+    post_office = fields.Selection(string="Post Office", selection=[], tracking=True)
     zip = fields.Char('Zip', change_default=True, readonly=False, store=True,tracking=True)
     city = fields.Char('City', readonly=False, store=True,tracking=True)
     details=fields.One2many('details.module','connecting_fields','details',tracking=True,copy=True, auto_join=True)
@@ -40,12 +43,75 @@ class Img(models.Model):
     User=fields.Many2one('res.users',string='User',default= lambda self: self.env.user.id)
     company=fields.Many2one('res.company',string='Company',default= lambda self:self.env.user.company_id.id)
 
-    _sql_constraints =[('uniq_name','CHECK(age >= 18 )','Enter the valid date')]
+    _sql_constraints = [('unique_name', 'UNIQUE(name)', 'The name must be unique')]
     # @api.model_create_multi
     # def write(self, vals):
     #     res=super(Img,self).write(vals)
     #     print(res)
     #     return res
+
+    @api.onchange('zip')
+    def _onchange_pin_code(self):
+        if self.zip:
+            try:
+                # Call the API
+                url = f"https://api.postalpincode.in/pincode/{self.zip}"
+                response = requests.get(url)
+                if response.status_code == 200:
+                    data = response.json()
+                    if data[0]['Status'] == 'Success':
+                        # Populate Post Office names in the selection field
+                        post_offices = data[0]['PostOffice']
+                        self.post_office = False  # Reset selection
+                        post_office_selection = [
+                            (office['Name'], office['Name']) for office in post_offices
+                        ]
+                        self._fields['post_office'].selection = post_office_selection
+
+                        # Default values from the first Post Office
+                        default_office = post_offices[0]
+                        self.city = default_office['District']
+                        state_name = default_office['State']
+                        country_name = default_office['Country']
+
+                        # Fetch or create country and state
+                        country = self.env['res.country'].search([('name', '=', country_name)], limit=1)
+                        if country:
+                            self.country_id = country.id
+                        else:
+                            self.country_id = self.env['res.country'].create({'name': country_name}).id
+
+                        state = self.env['res.country.state'].search([('name', '=', state_name)], limit=1)
+                        if state:
+                            self.state_id = state.id
+                        else:
+                            self.state_id = self.env['res.country.state'].create({
+                                'name': state_name,
+                                'country_id': self.country_id.id
+                            }).id
+
+                        # Populate street2 with block, division, or additional details
+                        self.street2 = f"{default_office['Block']}, {default_office['Division']}"
+
+                    else:
+                        self.city = self.state_id = self.country_id = self.street2 = self.post_office = False
+                        return {'warning': {'title': "Invalid Pin Code", 'message': "No data found for this pin code."}}
+                else:
+                    return {'warning': {'title': "API Error", 'message': "Could not connect to the postal API."}}
+            except Exception as e:
+                return {'warning': {'title': "Error", 'message': str(e)}}
+
+    @api.onchange('state_id')
+    def _onchange_state_id(self):
+        if self.state_id:
+            self.country_id = self.state_id.country_id
+        else:
+            self.country_id = False
+
+    @api.onchange('country_id')
+    def _onchange_country_id(self):
+        if not self.country_id:
+            self.state_id = False
 
     def tata(self):
         data=self.env['res.config.settings'].search([])

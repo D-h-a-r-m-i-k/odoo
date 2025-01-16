@@ -8,8 +8,9 @@
         'sale'
     ],
     'data': [
-        'security/ir.model.access.csv',
         'data/sequence.xml',
+        'security/security_data.xml',
+        'security/ir.model.access.csv',
         'wizard/face_detaction_wizard_view.xml',
         'wizard/img_wizard_view.xml',
         'views/inher_view.xml',

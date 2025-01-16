@@ -1,5 +1,9 @@
+from email.policy import default
+
+import requests
 
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError,UserError
 import base64
 import face_recognition
 import numpy as np
@@ -22,6 +26,7 @@ class First(models.Model):
     attendance_count=fields.Integer(string='Attendance_count',compute='get_count')
     salary=fields.Integer(string='Salary per month',help='Base Salary per Month', required=True)
     standard_working_hours=fields.Float(string='Standard Working Hours',help='Min Working Hours', required=True,default=8.00)
+    bank_detail_ids=fields.One2many('bank.details','bank_detail_id',string='Bank')
 
     def get_count(self):
         cont = self.env['attendance.module'].search_count([('name','=',self.name)])
@@ -65,3 +70,32 @@ class First(models.Model):
                     record.face_encoding = None
             else:
                 record.face_encoding = None
+
+class BankDetails(models.Model):
+    _name = 'bank.details'
+    _description = 'User Bank Details'
+
+    bank_detail_id=fields.Many2one('first.module',string='Bank Details')
+    Account_no=fields.Char(string='Account No.')
+    ifsc_code=fields.Char(string='IFSC code')
+    branch=fields.Char(string='Branch',compute='get_bank_details',default='')
+    Bank_name=fields.Char(string='Bank Name',compute='get_bank_details',default='')
+
+
+
+    @api.depends('ifsc_code')
+    def get_bank_details(self):
+        url = f"https://ifsc.razorpay.com/{self.ifsc_code}"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            data = response.json()
+
+            if "BRANCH" in data and "BANK" in data:
+                self.Bank_name=data['BANK']
+                self.branch=data['BRANCH']
+            else:
+                raise UserError(_('Invalid IFSC code or information not available.'))
+
+        except Exception as e:
+            raise UserError(_(f"An error occurred: {e}"))

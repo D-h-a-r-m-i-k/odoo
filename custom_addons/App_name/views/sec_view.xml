@@ -33,16 +33,16 @@
                     <group>
                         <group>
                             <field name="user_name"/>
-                            <field name="gender"/>
+                            <field name="gender" groups="App_name.group_appointment_module_admin,App_name.group_appointment_module_appoint"/>
                         </group>
                         <group>
                             <field name="date_of_birth"/>
                         </group>
                         <group>
-                            <field name="total_qty"/>
+                            <field name="total_qty" groups="App_name.group_appointment_module_admin"/>
                         </group>
                     </group>
-                    <notebook>
+                    <notebook groups="App_name.group_appointment_module_admin">
                         <page name="appointment_line" string="data">
                             <field name="appointment_line_ides">
                                 <list editable="top">

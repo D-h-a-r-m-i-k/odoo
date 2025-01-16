@@ -115,7 +115,7 @@
                 <filter string="Register" name="register" domain="[('status','=','register')]"/>
                 <filter string="Active" name="active" domain="[('status','=','active')]"/>
                 <separator/>
-                <group string="Group By" expand="0">
+                <group string="Group By" expand="0" groups="App_name.group_appointment_module_admin">
                     <filter string="Status" name="status" context="{'group_by':'status'}"/>
                     <filter string="Country_id" name="country_id" context="{'group_by':'country_id'}"/>
                 </group>
@@ -185,6 +185,8 @@
                                 <field name="street" placeholder="Street..." class="o_address_street"
                                        readonly="status == 'register'"/>
                                 <field name="street2" placeholder="Street2..." class="o_address_street"
+                                       readonly="status == 'register'"/>
+                                <field name="post_office" placeholder="post_offices..."
                                        readonly="status == 'register'"/>
                                 <field name="city" placeholder="city" class="o_address_city"
                                        readonly="status == 'register'"/>

@@ -79,6 +79,26 @@
                             <field name="standard_working_hours" widget="float_time"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Bank Details">
+                            <field name="bank_detail_ids">
+                                <list string="Bank">
+                                    <field name="Account_no"/>
+                                    <field name="ifsc_code"/>
+                                    <field name="Bank_name"/>
+                                    <field name="branch"/>
+                                </list>
+                                <form string="Bank">
+                                    <group>
+                                        <field name="Account_no"/>
+                                        <field name="ifsc_code"/>
+                                        <field name="Bank_name"/>
+                                        <field name="branch"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <chatter/>
             </form>
