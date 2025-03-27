@@ -21,7 +21,7 @@ class Sec(models.Model):
         for vals in vals_list:
             if not vals.get('reference') or vals['reference']=='New':
                 vals['reference']=self.env['ir.sequence'].next_by_code('sec.module')
-        return super().create(vals_list)
+        return super(Ce).create(vals_list)
 
     def _compute_display_name(self):
         for rec in self:

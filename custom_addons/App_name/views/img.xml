@@ -120,7 +120,7 @@
                     <filter string="Country_id" name="country_id" context="{'group_by':'country_id'}"/>
                 </group>
                 <searchpanel>
-                    <field name="status" string="Status" icon="fa-truck" enable_counters="1"/>
+                    <field name="status" string="Status" icon="oi-arrow-right" enable_counters="1"/>
                     <field name="country_id" string="Country" select='multi' enable_counters="1"/>
                 </searchpanel>
 
@@ -129,7 +129,7 @@
     </record>
 
 
-    <record id="view_img_module_form" model="ir.ui.view">
+    <record id="view_img_module_form" model="ir.ui.view" >
         <field name="name">img.module.form</field>
         <field name="model">img.module</field>
         <field name="arch" type="xml">

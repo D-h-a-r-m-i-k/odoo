@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ATTENDANCE_DATA_FIELD" model="ir.ui.view">
+        <field name="name">attendance.employee.edit</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <field name="player_type"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

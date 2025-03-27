@@ -1,10 +1,9 @@
-from email.policy import default
 import requests
 from odoo import fields,models,api,_
 from datetime import date,datetime
 
 
-from odoo.exceptions import ValidationError,UserError
+from odoo.exceptions import UserError
 
 
 class Img(models.Model):
@@ -43,7 +42,7 @@ class Img(models.Model):
     User=fields.Many2one('res.users',string='User',default= lambda self: self.env.user.id)
     company=fields.Many2one('res.company',string='Company',default= lambda self:self.env.user.company_id.id)
 
-    _sql_constraints = [('unique_name', 'UNIQUE(name)', 'The name must be unique')]
+    _sql_constraints = [('unique_name', 'UNIQUE(f)', 'The name must be unique')]
     # @api.model_create_multi
     # def write(self, vals):
     #     res=super(Img,self).write(vals)
@@ -123,8 +122,8 @@ class Img(models.Model):
                 raise UserError(_('record is register that way record is not delete'))
         return super(Img, self).unlink()
 
-    @api.model
-    def demo_report(self,vals):
+
+    def demo_report(self):
         return  self.env.ref('App_name.action_report_demo_test_show').report_action(self.id)
 
     def meta_data(self):
@@ -207,8 +206,14 @@ class Img(models.Model):
 
     #search orm method
     def search_fun(self):
-        search_val=self.id
-        print(search_val)
+        search_val=self.env['first.module'].name_search(self.name)
+        try:
+            data=self.env['first.module'].browse(search_val[0][0])
+            data1=data.bank_detail_ids.Account_no
+            print(data1)
+        except:
+            raise UserError(_('data not found  '))
+
 
 
 class Details(models.Model):

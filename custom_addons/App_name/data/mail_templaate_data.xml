@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_mail_layout" inherit_id="mail.mail_notification_layout">
+            <!--header-->
+            <xpath expr="//t[@t-call='mail.notification_preview']" position="replace">
+                <div style="text-align:center;">
+                    <img src="res.company/1/logo" style="max-height: 60px;" alt="Company Logo"/>
+                    <h2>Welcome to Our Company</h2>
+                    <p style="font-size:14px; color:#555;">We are pleased to have you with us!</p>
+                </div>
+            </xpath>
+            <!--footer-->
+            <xpath expr="//div[@style='margin-top:16px;']" position="replace">
+                <div style="padding:20px; text-align:center; font-size:12px;">
+                    <hr style="border-top: 1px solid #ccc; margin: 10px 0;"/>
+                    <b t-out="company.name" style="font-size:14px; font-weight:normal; color:#555;"/>
+                    <p style="font-size:10px; color:#777;">Powered by
+                        <a href="https://www.odoo.com" style="color:#555;">Odoo</a>
+                    </p>
+                </div>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>
